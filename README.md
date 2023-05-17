@@ -1,3 +1,5 @@
+TODO LIST APP
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +70,29 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### `Additional Instructions`
+ 
+FEATURES
+1.Add new tasks to the list
+2.Mark tasks as completed or incomplete
+3.Edit existing tasks
+4.Delete tasks
+5.Filter tasks based on completion status
+6.Clear completed tasks
+
+USAGE
+1.Type you task in the input field provided 
+
+2.Click the "Add Task" button to add the task to the list.
+
+3.To mark a task as completed or incomplete, click the checkbox icon next to the task
+
+4.To edit an existing task, click the pencil icon next to the task. If changes have been made click update button else if no changes need to be made click cancel button.
+
+5.To delete a task, click the trash can icon next to the task.
+
+6.Use the filter buttons("Show All Tasks", "Show Incomplete Tasks","Show Completed Tasks")
+
+7.To clear completed tasks, click "Clear Completed Tasks" button
+
