@@ -108,9 +108,9 @@ const AddTask = () => {
 {
   filteredTasks.length === 0 ? 'No tasks...' :
 <div className="filter-buttons">
-<button onClick={() => filterTasks('completed')} className='btn btn-xs btn-info'>Show Completed</button>
-<button onClick={() => filterTasks('incomplete')} className='btn btn-xs btn-warning'>Show Incomplete</button>
-<button onClick={() => filterTasks('all')} className='btn btn-xs btn-primary'>Show All</button>
+<button onClick={() => filterTasks('completed')} className='btn btn-xs btn-info'>Show Completed Tasks</button>
+<button onClick={() => filterTasks('incomplete')} className='btn btn-xs btn-warning'>Show Incomplete Tasks</button>
+<button onClick={() => filterTasks('all')} className='btn btn-xs btn-primary'>Show All Tasks</button>
 <button onClick={handleClearCompletedTask} className='btn btn-xs btn-danger'>Clear Completed Tasks</button>
 </div>
 }
