@@ -6,6 +6,9 @@ body {
 .App {
   text-align: center;
 }
+li{
+  list-style-type: none;
+}
 
 .done .taskText {
   text-decoration: line-through;

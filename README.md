@@ -96,3 +96,12 @@ USAGE
 
 7.To clear completed tasks, click "Clear Completed Tasks" button
 
+### Dependencies
+"@fortawesome/free-regular-svg-icons": "^6.4.0",
+"@fortawesome/free-solid-svg-icons": "^6.4.0",
+"@fortawesome/react-fontawesome": "^0.2.0",
+"bootstrap": "^5.2.3",
+"react": "^18.2.0",
+"react-dom": "^18.2.0",
+"react-scripts": "5.0.1",
+"reactstrap": "^9.1.9",
