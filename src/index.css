@@ -1,4 +1,12 @@
 .main{
 display: flex;
   width: 100%;
+  background: url('./wp2188042.jpg') no-repeat;
+  background-size:2500px;
+  height: 1140px;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

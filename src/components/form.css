@@ -1,18 +1,21 @@
+
 .app {
     max-width: 500px;
     width: 50%;
-    margin: 0 auto;
+    height: 800px;
+    margin: 150px auto;
     padding: 20px;
+    font-family: sans-serif;
+    /* background-color: rgb(108, 153, 197); */
+    background-color: transparent;
+    justify-content: center;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
     font-weight: bold;
+    color: aliceblue;
   }
-  
+
+
   input[type="text"],
   input[type="number"],
   input[type="date"],
@@ -20,16 +23,23 @@
   textarea {
     display: block;
     width: 90%;
+     background-color: #e2ebed;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
     margin-bottom: 10px;
+    margin: 5px 10px;
   }
   
   input[type="checkbox"] {
     display: inline-block;
     margin-right: 5px;
-    background-color: #7bcbe3;
+    background-color: #add0db;
+  }
+  input[type="range"]{
+    width: 400px;
+    text-align: center;
+    color: aqua;
   }
   
   fieldset {
@@ -56,4 +66,6 @@
   button[type="submit"]:hover {
     background-color: #262726;
   }
-  
+  h1{
+    text-align: center;
+  }
