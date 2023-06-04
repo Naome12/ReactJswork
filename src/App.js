@@ -1,10 +1,10 @@
 import React from 'react'
-import AddTask from "./components/AddTask"
+import AddTask from "./components/AddTask.jsx"
 
 const App = () => {
   return (
     <div>
-      <AddTask/>
+    <AddTask/>
     </div>
   )
 }

@@ -85,3 +85,15 @@ button{
   margin: 0px 5px 10px;
   width: 200px;
 }
+
+/* button{
+  margin: 0px 5px 10px;
+  width: 200px;
+  height: 30px;
+} */
+
+.create{
+  text-align: center;
+  margin-top: 400px;
+  font-size: larger;
+}

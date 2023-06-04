@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate } from 'react-router-dom';
 import { faCircleCheck, faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import '../App.css';
-import Edit from './Edit';
 
 const AddTask = () => {
   const [toDo, setToDo] = useState([]);
@@ -12,62 +10,32 @@ const AddTask = () => {
   const [updateData, setUpdateData] = useState('');
   const [filter, setFilter] = useState('all');
 
-  // Fetch tasks from the backend on component mount
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const fetchTasks = async () => {
-    try {
-      const res = await fetch('http://localhost:4000/api');
-      const data = await res.json();
-      setToDo(data); 
-    } catch (error) {
-      console.log(error);
+  const addTask = () => {
+    if (newTask) {
+      const num = toDo.length + 1;
+      const newEntry = { index: num, title: newTask, status: false };
+      setToDo([...toDo, newEntry]);
+      setNewTask('');
     }
   };
 
-  // Adding a new task
-  const addTask = async () => {
-    try {
-      if (newTask) {
-        const res = await fetch('http://localhost:4000/api', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ title: newTask, status: false }),
-        });
-        const data = await res.json();
-        setToDo([...toDo, data]); 
-        setNewTask(''); 
+  const markDone = (index) => {
+    const newTasks = toDo.map((task) => {
+      if (task.index === index) {
+        return { ...task, status: !task.status };
       }
-    } catch (error) {
-      console.log(error);
-    }
+      return task;
+    });
+    setToDo(newTasks);
   };
 
-  // Marking a task as complete
-  const markDone = (id) => {
-    setToDo((tasks) =>
-      tasks.map((task) => {
-        if (task.id === id) {
-          return { ...task, status: !task.status };
-        }
-        return task;
-      })
-    );
-  };
-
-  // Clearing completed tasks
   const handleClearCompletedTask = () => {
     const newTodo = toDo.filter((task) => !task.status);
     setToDo(newTodo);
   };
 
-  // Deleting a task
-  const deleteTask = (id) => {
-    const newTasks = toDo.filter((task) => task.id !== id);
+  const deleteTask = (index) => {
+    const newTasks = toDo.filter((task) => task.index !== index);
     setToDo(newTasks);
   };
 
@@ -75,10 +43,26 @@ const AddTask = () => {
     setFilter(status);
   };
 
-  // Filter the tasks based on the selected filter
-  const filteredTasks = toDo.filter((task) =>
-    filter === 'completed' ? task.status : filter === 'incomplete' ? !task.status : true
-  );
+  const updateToDo = (updatedTask) => {
+    const updatedTasks = toDo.map((task) => {
+      if (task.index === updatedTask.index) {
+        return updatedTask;
+      }
+      return task;
+    });
+    setToDo(updatedTasks);
+    setUpdateData('');
+  };
+
+  const filteredTasks = toDo.filter((task) => {
+    if (filter === 'completed') {
+      return task.status;
+    } else if (filter === 'incomplete') {
+      return !task.status;
+    } else {
+      return true;
+    }
+  });
 
   return (
     <div className="container App">
@@ -87,8 +71,24 @@ const AddTask = () => {
       <h2>To Do List App</h2>
       <br />
       <br />
-      {updateData && updateData ? (
-        <Edit updateData={updateData} setUpdateData={setUpdateData} />
+      {updateData && updateData.index ? (
+        <div className="row">
+          <div className="col">
+            <input
+              value={updateData.title}
+              onChange={(e) => setUpdateData({ ...updateData, title: e.target.value })}
+              className="form-control form-control-lg"
+            />
+          </div>
+          <div className="col-auto">
+            <button className="btn btn-lg btn-success mr-20" onClick={() => updateToDo(updateData)}>
+              Update
+            </button>
+            <button className="btn btn-lg btn-warning" onClick={() => setUpdateData('')}>
+              Cancel
+            </button>
+          </div>
+        </div>
       ) : (
         <>
           <div className="row">
@@ -106,31 +106,36 @@ const AddTask = () => {
             </div>
           </div>
           <br />
-          {filteredTasks.map((task, index) => (
-            <div className="col taskBg" key={task.id}>
-              <li className={task.status ? 'done' : ''}>
-                <div>
-                  <span className="taskNumber">{index + 1}</span>
-                  <span className="taskText">{task.title}</span>
-                </div>
-                <div className="iconsWrap">
-                  <span onClick={() => markDone(task.id)}>
-                    <FontAwesomeIcon icon={faCircleCheck} />
-                  </span>
-                  {!task.status ? (
-                    <span onClick={() => setUpdateData({ id: task.id, title: task.title })}>
-                      <FontAwesomeIcon icon={faPen} />
-                    </span>
-                  ) : null}
-                  <span onClick={() => deleteTask(task.id)} title="Delete">
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </span>
-                </div>
-              </li>
-            </div>
-          ))}
         </>
       )}
+
+      {filteredTasks.map((task, index) => (
+        <React.Fragment key={task.index}>
+          <div className="col taskBg">
+            <div className={task.status ? 'done' : ''}>
+              <span className="taskNumber">{index + 1}</span>
+              <span className="taskText">{task.title}</span>
+            </div>
+            <div className="iconsWrap">
+              <span onClick={() => markDone(task.index)} title="Completed / Not Completed">
+                <FontAwesomeIcon icon={faCircleCheck} />
+              </span>
+              {!task.status && (
+                <span
+                  title="Edit"
+                  onClick={() => setUpdateData({ index: task.index, title: task.title, status: task.status })}
+                >
+                  <FontAwesomeIcon icon={faPen} />
+                </span>
+              )}
+              <span onClick={() => deleteTask(task.index)} title="Delete">
+                <FontAwesomeIcon icon={faTrashCan} />
+              </span>
+            </div>
+          </div>
+        </React.Fragment>
+      ))}
+
       {filteredTasks.length === 0 ? (
         'No tasks...'
       ) : (
